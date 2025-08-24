@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Carte de visite – Mariage</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#faf7f2; --card:#ffffff; --ink:#2f2a25; --gold:#c7a96b; --muted:#6f675e;
+    }
+    *{box-sizing:border-box}
+    html, body{height:100%;}
+    body{
+      margin:0; 
+      background:var(--bg); 
+      color:var(--ink);
+      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:0;             
+      min-height:100vh;
+    }
+    .card{
+      position:relative; 
+      margin:auto; 
+      background:var(--card); 
+      border-radius:28px;
+      box-shadow:0 20px 60px rgba(0,0,0,.08);
+      padding:44px 36px; 
+      overflow:hidden; 
+      border:1px solid #eee;
+      max-width:600px;
+      width:90%;
+    }
+    .header{ text-align:center; margin-bottom:26px; }
+    .header .date{ letter-spacing:.18em; text-transform:uppercase; color:var(--muted); font-size:.9rem; }
+    .header h1{ font-family:"Playfair Display", serif; font-weight:700; font-size:clamp(28px, 4vw, 44px); margin:8px 0 10px; }
+    .header .sub{ color:var(--muted); font-size:1rem; }
+    .divider{ display:flex; align-items:center; gap:12px; margin:24px auto 18px; width:min(520px, 90%); }
+    .divider .line{flex:1; height:1px; background:linear-gradient(90deg, transparent, var(--gold), transparent)}
+    .divider .dot{ width:8px; height:8px; border-radius:50%; background:var(--gold); }
+
+    .photo-frame{
+      width: 100%;
+      max-width: 420px;
+      aspect-ratio: 1 / 1; /* carré parfait */
+      margin: 0 auto 18px; /* centrage horizontal exact */
+      border-radius:20px; 
+      overflow:hidden;
+      background:
+        repeating-linear-gradient(45deg, rgba(199,169,107,.14) 0 10px, transparent 10px 20px),
+        #fff;
+      display:flex; 
+      justify-content:center; 
+      align-items:center; 
+      border:1px solid rgba(199,169,107,.35);
+      cursor:pointer; 
+    }
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .names{ text-align:center; margin: 8px 0 16px; }
+    .names .and{ color:var(--gold); font-weight:700; margin:0 8px; }
+    .names .who{ font-family:"Playfair Display", serif; font-size:clamp(22px, 3.2vw, 34px); font-weight:600; }
+    .details{ text-align:center; color:var(--muted); line-height:1.6; }
+  </style>
+</head>
+<body>
+
+  <!-- Carte -->
+  <section class="card">
+    <header class="header">
+      <div class="date">Mardi 21 Octobre 2025 • 18:30</div>
+      <h1>Invitation de Mariage</h1>
+      <div class="sub">Vous êtes cordialement invités à célébrer notre union</div>
+    </header>
+
+    <div class="divider"><span class="line"></span><span class="dot"></span><span class="line"></span></div>
+
+    <figure class="photo-frame">
+      <img src="03.png" alt="Photo des mariés" />
+    </figure>
+
+    <div class="names">
+      <span class="who">Myriam</span>
+      <span class="and">&amp;</span>
+      <span class="who">Marc</span>
+    </div>
+
+    <p class="details">
+      <ul>
+        <li>⁠Rejoignez nous pour une soirée de joie et d’amour à : Gallery 35 Rehov HA-AVODA- 35 ASHDOD</li>
+        <li>Cocktail 19:00h, khouppa 19:30h, dîner 21:00h</li>
+        <li>Merci de confirmer votre présence avant le 20 septembre 2025</li>
+      </ul>
+    </p>
+  </section>
+
+  <!-- Musique -->
+  <audio id="player" preload="auto" loop>
+    <source src="02.mp3" type="audio/mpeg">
+    <source src="02.ogg" type="audio/ogg">
+    Votre navigateur ne supporte pas l'audio.
+  </audio>
+
+  <script>
+    const player = document.getElementById("player");
+    const photo = document.querySelector(".photo-frame img");
+    let musicStarted = false;
+
+    function startMusic() {
+      player.play().catch(err => console.log("Autoplay bloqué:", err));
+      document.body.removeEventListener("click", startMusic);
+      document.body.removeEventListener("touchstart", startMusic);
+    }
+
+    // Premier contact = démarrage
+    document.body.addEventListener("click", startMusic);
+    document.body.addEventListener("touchstart", startMusic);
+
+    function startMusic2() {
+      if (!musicStarted) {
+        player.play().catch(err => console.log("Autoplay bloqué:", err));
+        musicStarted = true;
+      }
+    }
+
+    // Lancer la musique sur tap/clic de l'image uniquement
+    photo.addEventListener("click", startMusic2);
+    photo.addEventListener("touchstart", startMusic2);
+  </script>
+
+</body>
+</html>
